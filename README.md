@@ -30,7 +30,8 @@
 - инкрементным резервным копированием.
 
 *Приведите ответ в свободной форме.*
-
+```
+```
 Полное резервное копирование (Full BackUp) - каждый раз выполняется полное копирование всех данных.
 - самый надёжный, т.к. каждый раз копируются все данные;
 - самый быстрый, с точки зрения скорости восстановления;
@@ -51,7 +52,31 @@
 Установите программное обеспечении Bacula, настройте bacula-dir, bacula-sd, bacula-fd. Протестируйте работу сервисов.
 
 *Пришлите конфигурационные файлы для bacula-dir, bacula-sd, bacula-fd.*
+```
+sudo apt install bacula postgresql
+sudo nano /etc/bacula/bacula-sd.conf
+sudo /usr/sbin/bacula-sd -t -c /etc/bacula/bacula-sd.conf
+sudo systemctl restart bacula-sd.service
+sudo systemctl status bacula-sd.service
+sudo nano /etc/bacula/bacula-fd.conf # Конфигурим локального клиента
+sudo /usr/sbin/bacula-fd -t -c /etc/bacula/bacula-fd.conf
+sudo systemctl restart bacula-fd.service
+sudo systemctl status bacula-fd.service
+sudo nano /etc/bacula/bacula-dir.conf # Конфигурим консоль
+sudo /usr/sbin/bacula-dir -t -c /etc/bacula/bacula-dir.conf
+sudo systemctl restart bacula-dir.service
+sudo systemctl status bacula-dir.service
+# Переходим в консоль
+sudo bconsole
+* run
+* message
+* exit
+```
+[**Файл bacula-sd.conf**](https://github.com/StanislavBaranovskii/10-4-hw/blob/main/data/bacula-sd.conf)
 
+[**Файл bacula-fd.conf**](https://github.com/StanislavBaranovskii/10-4-hw/blob/main/data/bacula-fd.conf)
+
+[**Файл bacula-dir.conf**](https://github.com/StanislavBaranovskii/10-4-hw/blob/main/data/bacula-dir.conf)
 
 ---
 
@@ -60,7 +85,8 @@
 Установите программное обеспечении Rsync. Настройте синхронизацию на двух нодах. Протестируйте работу сервиса.
 
 *Пришлите рабочую конфигурацию сервера и клиента Rsync.*
-
+```
+```
 
 ---
 
@@ -69,6 +95,7 @@
 Настройте резервное копирование двумя или более методами, используя одну из рассмотренных команд для папки `/etc/default`. Проверьте резервное копирование.
 
 *Пришлите рабочую конфигурацию выбранного сервиса по поставленной задаче.*
-
+```
+```
 
 ---
