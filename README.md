@@ -86,7 +86,39 @@ sudo bconsole
 
 *Пришлите рабочую конфигурацию сервера и клиента Rsync.*
 ```
+sudo apt install rsync
+sudo nano /etc/default/rsync # RSYNC_ENABLE=true
+sudo nano /etc/rsyncd.conf # Содержимое файла ниже в блоке кода
+sudo systemctl start rsync.service
+sudo systemctl status rsync.service
+sudo netstat -tulnp |grep rsync # Проверяем работу rsync по сети
+sudo nano /etc/rsyncd.scrt # backup:12345
+sudo chmod 0600 /etc/rsyncd.scrt
+# На второй ноде
+sudo mkdir /root/scripts
+sudo nano /root/scripts/backup-node1.sh # Содержимое файла-скрипта ниже в блоке кода
+chmod 0744 /root/scripts/backup-node1.sh
+sudo nano /etc/rsyncd.scrt # 12345
+sudo chmod 0600 /etc/rsyncd.scrt
+/root/scripts/backup-node1.sh # Тестируем синхронизацию
 ```
+**Файл rsyncd.conf :**
+```
+pid file = /var/run/rsyncd.pid
+log file = /var/log/rsyncd.log
+transfer logging = true
+munge symlinks = yes
+# папка источник для бэкапа
+[data]
+path = /data
+uid = root
+read only = yes
+list = yes
+comment = Data backup Dir
+auth users = backup
+secrets file = /etc/rsyncd.scrt
+```
+[**Файл backup-node1.sh**](https://github.com/StanislavBaranovskii/10-4-hw/blob/main/data/backup-node1.sh)
 
 ---
 
